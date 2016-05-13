@@ -1,7 +1,8 @@
 /*jslint node: true */
 /*jslint expr: false */
 
-//curEarthOblique NOT INCLUDED IN GULP YET!
+//Not included yet
+//curEarthOblique
 
 "use strict";
 var xpl = {};
