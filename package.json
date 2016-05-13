@@ -1,0 +1,19 @@
+{
+  "name": "explorejs",
+  "version": "1.0.0",
+  "description": "Visualize astronomy",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Willjfield/explore.git"
+  },
+  "author": "willjfield",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Willjfield/explore/issues"
+  },
+  "homepage": "https://github.com/Willjfield/explore#readme"
+}
