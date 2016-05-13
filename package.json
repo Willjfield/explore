@@ -15,5 +15,13 @@
   "bugs": {
     "url": "https://github.com/Willjfield/explore/issues"
   },
-  "homepage": "https://github.com/Willjfield/explore#readme"
+  "homepage": "https://github.com/Willjfield/explore#readme",
+  "devDependencies": {
+    "gulp": "^3.9.1",
+    "gulp-concat": "^2.6.0",
+    "gulp-jshint": "^2.0.1",
+    "gulp-rename": "^1.2.2",
+    "gulp-uglify": "^1.5.3",
+    "jshint": "^2.9.2"
+  }
 }
