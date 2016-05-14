@@ -32,7 +32,7 @@ var categories = {
 		 globalstar : "globalstar.txt",
 		 amateur : "amateur.txt",
 		 experimental : "x-comm.txt",
-		 other : "other-comm.txt",
+		 otherComm : "other-comm.txt",
 		 GPSOps : "gps-ops.txt",
 		 glonassOps : "glo-ops.txt",
 		 galileo : "galileo.txt",
@@ -49,51 +49,51 @@ var categories = {
 		 cubesats : "cubesat.txt",
 		 other : "other.txt",
 		 classified:"inttles.txt"
-	}
+	};
 	//classified:
 	//var classified = "https://www.prismnet.com/~mmccants/tles/classfd.zip"
 
 	//classified categories:
-	var nro = ['Rhyolite','Vortex','Magnum','Mercury','Mentor','GeoLITE']
+	var nro = ['Rhyolite','Vortex','Magnum','Mercury','Mentor','GeoLITE'];
 	
-	var airforce = ['Canyon','DSP','Milstar','SBIRS','GSSAP']
-	var navy=['FleetSatCom']
-	var jointusmilitary=['DSCS','SDS','Trumpet','USA','Delta4Demo','Mitex','WGS','MUOS','CLIO','ISON']
-	var soviet=['Ekran']
-	var jointothermilitaries=['Sicral','AEHF']
+	var airforce = ['Canyon','DSP','Milstar','SBIRS','GSSAP'];
+	var navy=['FleetSatCom'];
+	var jointusmilitary=['DSCS','SDS','Trumpet','USA','Delta4Demo','Mitex','WGS','MUOS','CLIO','ISON'];
+	var soviet=['Ekran'];
+	var jointothermilitaries=['Sicral','AEHF'];
 
-	var unknown=['UFO','Unknown','UI168','Unknwn']
+	var unknown=['UFO','Unknown','UI168','Unknwn'];
 	
 
-	var classifiedCategories = [airforce,nro,navy,jointusmilitary,soviet,unknown,jointothermilitaries]
+	var classifiedCategories = [airforce,nro,navy,jointusmilitary,soviet,unknown,jointothermilitaries];
 	xpl.classifiedMissions = ['Rhyolite','Vortex','Magnum','Mercury','Mentor','GeoLITE',
 							'Canyon','DSP','Milstar','SBIRS','GSSAP',
 							'FleetSatCom',
 							'DSCS','SDS','Trumpet','USA','Delta4Demo','Mitex','WGS','MUOS','CLIO','ISON',
 							'Ekran',
 							'Sicral','AEHF',
-							'UFO','Unknown','UI168','Unknwn','96044','UI168']
-	xpl.classifiedCategories = classifiedCategories
+							'UFO','Unknown','UI168','Unknwn','96044','UI168'];
+	xpl.classifiedCategories = classifiedCategories;
 
 	var xmlhttp = new XMLHttpRequest();
 
 	xpl.getTLE = function(query, satellites, callback, pathToData){
-		var path = ''
-		var corsURL = "http://cors.io/?u="
-		var celestrakTypeURL = "http://www.celestrak.com/NORAD/elements/"
-		var celestrakNORAD = "http://celestrak.com/cgi-bin/TLE.pl?CATNR="
-		var url
+		var path = '';
+		var corsURL = "http://cors.io/?u=";
+		var celestrakTypeURL = "http://www.celestrak.com/NORAD/elements/";
+		var celestrakNORAD = "http://celestrak.com/cgi-bin/TLE.pl?CATNR=";
+		var url;
 		
 		if(query == 'classified') {
-			celestrakTypeURL='' 
-			corsURL=""
-			typeof pathToData == 'undefined' ? path='../../lib/data/':{}
+			celestrakTypeURL='';
+			corsURL="";
+			if(typeof pathToData == 'undefined'){path='../../lib/data/';}
 		}
 
 		if(query in categories){
-			url = path+corsURL + celestrakTypeURL + categories[query]
+			url = path+corsURL + celestrakTypeURL + categories[query];
 		}else{
-			console.log("not a valid query")
+			console.log("not a valid query");
 			return 0;
 		}
 
@@ -102,20 +102,20 @@ var categories = {
 			if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
 			    var tleresponse = xmlhttp.responseText;
 			    tleresponse = tleresponse.split('\n');
-			    tleresponse.splice(tleresponse.length-1)
+			    tleresponse.splice(tleresponse.length-1);
 			    for(var s = 0; s<tleresponse.length;s+=3){
 			    		satellites.push({
 			    			id: tleresponse[s].replace(/\s/g, ''),
 			    			line1 : tleresponse[s+1],
 			    			line2 : tleresponse[s+2]
-			    		})
+			    		});
 			        }
 			        callback();
 		    }
 		    
-		}
+		};
 		xmlhttp.send(null);
-	}
+	};
 	/* EXAMPLE:
 	var stations = []
 	getTLE("stations", stations, function(){
@@ -123,21 +123,21 @@ var categories = {
 	})*/
 
 	xpl.batchTLEUpdate = function (tle_data, t) {
-		typeof t == "undefined" ? t = 0 : {}
+		if(typeof t == "undefined"){t = 0;}
 	    for (var key in tle_data) {
 	        if (tle_data.hasOwnProperty(key)) {
 	            var obj = tle_data[key];
 	            obj.update(t);
 	        }
 	    }
-	}
+	};
 
 	//TEXTURES
 	//http://www.solarsystemscope.com/nexus/
 	//http://www.celestiamotherlode.net/
 	//http://visibleearth.nasa.gov/
 
-	xpl.planetTex = ["mercury","venus","earth_day","mars","jupiter","saturn","uranus","neptune"]
+	xpl.planetTex = ["mercury","venus","earth_day","mars","jupiter","saturn","uranus","neptune"];
 
 	///WHAT IF I APPEND THE PLANET OBJECT WITH THESE TEXTURES??
 	// function loadPlanetImage(planet,type,callback,pathToData){
@@ -173,11 +173,11 @@ var categories = {
 	///PROBES///
 	//http://omniweb.gsfc.nasa.gov/coho/helios/heli.html
 	function probePositions(probeName,array,callback,pathToData){
-		var baseUrl = pathToData || "data/probes/"
+		var baseUrl = pathToData || "data/probes/";
 		var xmlhttp = new XMLHttpRequest();
-		var probePositions = []
-		var endUrl = "_solarEcliptic.txt"
-		var url = baseUrl+probeName+endUrl
+		var probePositions = [];
+		var endUrl = "_solarEcliptic.txt";
+		var url = baseUrl+probeName+endUrl;
 
 		xmlhttp.open("GET", url, true);
 			xmlhttp.onreadystatechange = function() {
@@ -185,7 +185,7 @@ var categories = {
 				    var data = xmlhttp.responseText;
 				    data = data.split('\n');
 				    for(var d in data){
-				    	probePositions.push(data[d].split(/[ ]+/))
+				    	probePositions.push(data[d].split(/[ ]+/));
 				    }
 				    for(var p = 1; p<probePositions.length-1;p++){
 				    	array.push({
@@ -195,17 +195,17 @@ var categories = {
 				    		year:parseFloat(probePositions[p][0]),
 				    		day:parseFloat(probePositions[p][1]),
 				    		jday: jday(parseFloat(probePositions[p][0]), 1, 1, 0, 0, 0)+parseFloat(probePositions[p][1])
-				    	})
+				    	});
 				    }	
-				   callback()			
+				   callback();			
 			    }
-			}
+			};
 		xmlhttp.send(null);
 	}
 
 	xpl.probePositions = function(probeName,array,callback,pathToData){
-		return probePositions(probeName,array,callback,pathToData)
-	}
+		return probePositions(probeName,array,callback,pathToData);
+	};
 /*
  * satellite-js v1.1
  * (c) 2013 Shashwat Kandadai and UCSC
@@ -217,19 +217,19 @@ function eci_to_geodetic (eci_coords, gmst) {
     // http://www.celestrak.com/columns/v02n03/
     var a   = 6378.137;
     var b   = 6356.7523142;
-    var R   = Math.sqrt( (eci_coords["x"]*eci_coords["x"]) + (eci_coords["y"]*eci_coords["y"]) );
+    var R   = Math.sqrt( (eci_coords.x*eci_coords.x) + (eci_coords.y*eci_coords.y) );
     var f   = (a - b)/a;
     var e2  = ((2*f) - (f*f));
-    var longitude = Math.atan2(eci_coords["y"], eci_coords["x"]) - gmst;
+    var longitude = Math.atan2(eci_coords.y, eci_coords.x) - gmst;
     var kmax = 20;
     var k = 0;
-    var latitude = Math.atan2(eci_coords["z"],
-                   Math.sqrt(eci_coords["x"]*eci_coords["x"] +
-                                eci_coords["y"]*eci_coords["y"]));
+    var latitude = Math.atan2(eci_coords.z,
+                   Math.sqrt(eci_coords.x*eci_coords.x +
+                                eci_coords.y*eci_coords.y));
     var C;
     while (k < kmax){
         C = 1 / Math.sqrt( 1 - e2*(Math.sin(latitude)*Math.sin(latitude)) );
-        latitude = Math.atan2 (eci_coords["z"] + (a*C*e2*Math.sin(latitude)), R);
+        latitude = Math.atan2 (eci_coords.z + (a*C*e2*Math.sin(latitude)), R);
         k += 1;
     }
     var height = (R/Math.cos(latitude)) - (a*C);
@@ -237,8 +237,8 @@ function eci_to_geodetic (eci_coords, gmst) {
 }
 
 xpl.eci_to_ecf = function(eci_coords, gmst){
-	return eci_to_ecf (eci_coords, gmst)
-}
+	return eci_to_ecf (eci_coords, gmst);
+};
 
 function eci_to_ecf (eci_coords, gmst){
     // ccar.colorado.edu/ASEN5070/handouts/coordsys.doc
@@ -253,14 +253,15 @@ function eci_to_ecf (eci_coords, gmst){
     // [Y]  =  [-S C  0][Y]
     // [Z]ecf  [0  0  1][Z]eci
 
-    var X = (eci_coords["x"] * Math.cos(gmst))    + (eci_coords["y"] * Math.sin(gmst));
-    var Y = (eci_coords["x"] * (-Math.sin(gmst))) + (eci_coords["y"] * Math.cos(gmst));
-    var Z =  eci_coords["z"];
+    var X = (eci_coords.x * Math.cos(gmst))    + (eci_coords.y * Math.sin(gmst));
+    var Y = (eci_coords.x * (-Math.sin(gmst))) + (eci_coords.y * Math.cos(gmst));
+    var Z =  eci_coords.z;
     return { x : X, y : Y, z : Z };
 }
 xpl.ecf_to_eci = function(ecf_coords, gmst){
-	return ecf_to_eci(ecf_coords, gmst)
-}
+	return ecf_to_eci(ecf_coords, gmst);
+};
+
 function ecf_to_eci (ecf_coords, gmst){
     // ccar.colorado.edu/ASEN5070/handouts/coordsys.doc
     //
@@ -268,16 +269,16 @@ function ecf_to_eci (ecf_coords, gmst){
     // [Y]  =  [S  C  0][Y]
     // [Z]eci  [0  0  1][Z]ecf
     //
-    var X = (ecf_coords["x"] * Math.cos(gmst))    - (ecf_coords["y"] * Math.sin(gmst));
-    var Y = (ecf_coords["x"] * (Math.sin(gmst)))  + (ecf_coords["y"] * Math.cos(gmst));
-    var Z =  ecf_coords["z"];
+    var X = (ecf_coords.x * Math.cos(gmst))    - (ecf_coords.y * Math.sin(gmst));
+    var Y = (ecf_coords.x * (Math.sin(gmst)))  + (ecf_coords.y * Math.cos(gmst));
+    var Z =  ecf_coords.z;
     return { x : X, y : Y, z : Z };
 }
 // xpl.geodetic_to_ecf = function(geodetic_coords){}
 function geodetic_to_ecf (geodetic_coords){
-    var longitude   = geodetic_coords["longitude"];
-    var latitude    = geodetic_coords["latitude"];
-    var height      = geodetic_coords["height"];
+    var longitude   = geodetic_coords.longitude;
+    var latitude    = geodetic_coords.latitude;
+    var height      = geodetic_coords.height;
 
     var a           = 6378.137;
     var b           = 6356.7523142;
@@ -300,15 +301,15 @@ function topocentric (observer_coords, satellite_coords){
     // and he uses ECI.
     //
     //console.log(observer_coords)
-    var longitude   = observer_coords["longitude"];
-    var latitude    = observer_coords["latitude"];
-    var height      = observer_coords["height"];
+    var longitude   = observer_coords.longitude;
+    var latitude    = observer_coords.latitude;
+    var height      = observer_coords.height;
 
     var observer_ecf = geodetic_to_ecf (observer_coords);
 
-    var rx      = satellite_coords["x"] - observer_ecf["x"];
-    var ry      = satellite_coords["y"] - observer_ecf["y"];
-    var rz      = satellite_coords["z"] - observer_ecf["z"];
+    var rx      = satellite_coords.x - observer_ecf.x;
+    var ry      = satellite_coords.y - observer_ecf.y;
+    var rz      = satellite_coords.z - observer_ecf.z;
 
     var top_s   = ( (Math.sin(latitude) * Math.cos(longitude) * rx) +
                   (Math.sin(latitude) * Math.sin(longitude) * ry) -
@@ -321,9 +322,9 @@ function topocentric (observer_coords, satellite_coords){
 }
 
 function topocentric_to_look_angles (topocentric){
-    var top_s = topocentric["top_s"];
-    var top_e = topocentric["top_e"];
-    var top_z = topocentric["top_z"];
+    var top_s = topocentric.top_s;
+    var top_e = topocentric.top_e;
+    var top_z = topocentric.top_z;
     var range_sat    = Math.sqrt((top_s*top_s) + (top_e*top_e) + (top_z*top_z));
     var El      = Math.asin (top_z/range_sat);
     var Az      = Math.atan2 (-top_e, top_s) + pi;
@@ -362,32 +363,32 @@ function ecf_to_look_angles(observer_coords_ecf, satellite_coords_ecf) {
 
 satellite.topocentric_to_look_angles = function (topocentric){
 	return topocentric_to_look_angles(topocentric);
-}
+};
 
 satellite.eci_to_geodetic = function (eci_coords, gmst) {
     return eci_to_geodetic (eci_coords, gmst);
-}
+};
 
 satellite.ecf_to_look_angles = function (observer_coords_ecf, satellite_coords_ecf) {
 	return ecf_to_look_angles(observer_coords_ecf, satellite_coords_ecf);
-}
+};
 
 satellite.geodetic_to_ecf = function (geodetic_coords) {
     return geodetic_to_ecf (geodetic_coords);
-}
+};
 satellite.ecf_to_eci = function (ecf_coords, gmst) {
     return ecf_to_eci (ecf_coords, gmst);
-}
+};
 satellite.eci_to_ecf = function (eci_coords, gmst) {
     return eci_to_ecf (eci_coords, gmst);
-}
+};
 
 satellite.degrees_lat = function (radians) {
     return degrees_lat (radians);
-}
+};
 satellite.degrees_long = function (radians) {
     return degrees_long (radians);
-}
+};
 /*
  * satellite-js v1.1
  * (c) 2013 Shashwat Kandadai and UCSC
@@ -397,21 +398,21 @@ satellite.degrees_long = function (radians) {
 
 function doppler_factor (my_location, position, velocity) {
     var current_range = Math.sqrt(
-                        Math.pow(position["x"] - my_location["x"], 2) +
-                        Math.pow(position["y"] - my_location["y"], 2) +
-                        Math.pow(position["z"] - my_location["z"], 2));
+                        Math.pow(position.x - my_location.x, 2) +
+                        Math.pow(position.y - my_location.y, 2) +
+                        Math.pow(position.z - my_location.z, 2));
     var next_pos   = {
-                        x : position["x"] + velocity["x"],
-                        y : position["y"] + velocity["y"],
-                        z : position["z"] + velocity["z"]
+                        x : position.x + velocity.x,
+                        y : position.y + velocity.y,
+                        z : position.z + velocity.z
                     };
     var next_range =  Math.sqrt(
-                      Math.pow(next_pos["x"] - my_location["x"], 2) +
-                      Math.pow(next_pos["y"] - my_location["y"], 2) +
-                      Math.pow(next_pos["z"] - my_location["z"], 2));
+                      Math.pow(next_pos.x - my_location.x, 2) +
+                      Math.pow(next_pos.y - my_location.y, 2) +
+                      Math.pow(next_pos.z - my_location.z, 2));
     var range_rate =  next_range - current_range;
 
-    function sign (value) {if (value >= 0) {return 1;} else {return -1;}};
+    function sign (value) {if (value >= 0) {return 1;} else {return -1;}}
     range_rate *= sign(range_rate);
     var c = 299792.458; // Speed of light in km/s
     var factor = (1 + range_rate/c);
@@ -439,15 +440,15 @@ var satellite = (function () {
 
 // This is the actual footer to the entire satellite.js library definition.
 
-    return satellite;
+//     return satellite;
 
-})();
+// })();
 
 xpl.createGeodetic = function(_longitude,_latitude,_height){
 	this.longitude = _longitude*DEG2RAD;
 	this.latitude = _latitude*DEG2RAD;
 	this.height = _height;
-}
+};
 //////////DEGREES/RADIANS CONVERSION///////////
 var DEG2RAD = Math.PI/180.0;
 var RAD2DEG = 180.0/Math.PI;
@@ -1013,7 +1014,7 @@ xpl.curEarthOblique = function(jday){
  * License: MIT
  */
 
-xpl.satellite = (function () {
+xpl.satellite = {};
 
     var satellite = { version : "1.2" };
 /*

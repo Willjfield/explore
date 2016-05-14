@@ -7,7 +7,7 @@
  * License: MIT
  */
 
-xpl.satellite = (function () {
+xpl.satellite = {};
 
     var satellite = { version : "1.2" };
 /*
