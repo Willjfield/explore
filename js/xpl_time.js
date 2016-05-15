@@ -29,12 +29,12 @@ xpl.jday = function (year, mon, day, hr, minute, sec){
 };
 
 function jday(year, mon, day, hr, minute, sec){
-	typeof year == 'undefined' ? year = 0 : {};
-	typeof mon == 'undefined' ? mon = 0 : {};
-	typeof day == 'undefined' ? day = 0 : {};
-	typeof hr == 'undefined' ? hr = 0 : {};
-	typeof minute == 'undefined' ? minute = 0 : {};
-	typeof sec == 'undefined' ? sec = 0 : {};
+	if(typeof year === 'undefined'){year = 0;}
+	if(typeof mon === 'undefined'){mon = 0;}
+	if(typeof day === 'undefined'){day = 0;}
+	if(typeof hr === 'undefined'){hr = 0;}
+	if(typeof minute === 'undefined'){minute = 0;}
+	if(typeof sec === 'undefined'){sec = 0;}
 
 	return computeTheForm(year, mon, day, hr, minute, sec);
 }

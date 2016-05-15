@@ -704,15 +704,17 @@ function planet_xyz(p,jday) {
 	var zh = r * ( sind(v+w)*sind(i) );
 	var lonecl = atan2d(yh, xh);
 	var latecl = atan2d(zh, Math.sqrt(xh*xh + yh*yh + zh*zh));
+	var Ms;
+	var Mj;
 	if (p.num==JUPITER) {		// Jupiter pertuberations by Saturn
-		var Ms = rev(planets[SATURN].M[0] + planets[SATURN].M[1]*d);
+		Ms = rev(planets[SATURN].M[0] + planets[SATURN].M[1]*d);
 		lonecl += (-0.332)*sind(2*M-5*Ms-67.6) - 0.056*sind(2*M-2*Ms+21) + 0.042*sind(3*M-5*Ms+21) -
 				0.036*sind(M-2*Ms) + 0.022*cosd(M-Ms) + 0.023*sind(2*M-3*Ms+52) - 0.016*sind(M-5*Ms-69);
 		xh=r*cosd(lonecl)*cosd(latecl);		// recalc xh, yh
 		yh=r*sind(lonecl)*cosd(latecl);
 	}
 	if (p.num==SATURN) {		// Saturn pertuberations
-		var Mj = rev(planets[JUPITER].M[0] + planets[JUPITER].M[1]*d);
+		Mj = rev(planets[JUPITER].M[0] + planets[JUPITER].M[1]*d);
 		lonecl += 0.812*sind(2*Mj-5*M-67.6) - 0.229*cosd(2*Mj-4*M-2) + 0.119*sind(Mj-2*M-3) +
 				0.046*sind(2*Mj-6*M-69) + 0.014*sind(Mj-3*M+32);
 		latecl += -0.020*cosd(2*Mj-4*M-2) + 0.018*sind(2*Mj-6*M-49);
@@ -721,8 +723,8 @@ function planet_xyz(p,jday) {
     	zh = r*sind(latecl);
 	}
 	if (p.num==URANUS) {		// Uranus pertuberations
-		var Mj = rev(planets[JUPITER].M[0] + planets[JUPITER].M[1]*d);
-		var Ms = rev(planets[SATURN].M[0] + planets[SATURN].M[1]*d);
+		Mj = rev(planets[JUPITER].M[0] + planets[JUPITER].M[1]*d);
+		Ms = rev(planets[SATURN].M[0] + planets[SATURN].M[1]*d);
 		lonecl += 0.040*sind(Ms-2*M+6) + 0.035*sind(Ms-3*M+33) - 0.015*sind(Mj-M+20);
 		xh=r*cosd(lonecl)*cosd(latecl);		// recalc xh, yh
 		yh=r*sind(lonecl)*cosd(latecl);
@@ -988,8 +990,8 @@ function PlanetAlt(p,jday,obs) {
 
 xpl.curEarthOblique = function(jday){
         var _jd;
-        typeof jday == undefined ? _jd = xpl.now : _jd = jday
-        var t = ((_jd-2451545)/365.25/10000)
+        if(typeof jday === 'undefined'){_jd = xpl.now;}else{_jd = jday;} 
+        var t = ((_jd-2451545)/365.25/10000);
         var obl = 23.43929-
         (1.300258*t)-
         (0.0004305556*Math.pow(t,2))+
@@ -1000,10 +1002,10 @@ xpl.curEarthOblique = function(jday){
         (0.001977778*Math.pow(t,7))+
         (0.007741667*Math.pow(t,8))+
         (0.001608333*Math.pow(t,9))+
-        (0.0006805556*Math.pow(t,10))
+        (0.0006805556*Math.pow(t,10));
 
-        return obl
-    }
+        return obl;
+    };
 
 	////////////////  EARTH satellite-js   //////////////////
 	////	https://github.com/shashwatak/satellite-js	////
@@ -2355,7 +2357,7 @@ function dspace (dspace_parameters){
         nodem : nodem,
         dndt : dndt,
         nm : nm,
-    }
+    };
     return dspace_results;
 }
 /*
@@ -2480,17 +2482,17 @@ function days2mdhms(year, days){
 
 
 satellite.jday = function (year, mon, day, hr, minute, sec){
-	return jday(year, mon, day, hr, minute, sec)
-	}
+	return jday(year, mon, day, hr, minute, sec);
+	};
 
 satellite.gstime_from_jday = function (julian_day) {
     return gstime (julian_day);
-}
+};
 
 satellite.gstime_from_date = function (year, mon, day, hr, minute, sec) {
     var julian_day = jday(year, mon, day, hr, minute, sec);
     return gstime (julian_day);
-}
+};
 /*
  * satellite-js v1.1
  * (c) 2013 Shashwat Kandadai and UCSC
@@ -2838,21 +2840,21 @@ function sgp4init(satrec, sgp4init_parameters){
 
     var initl_result= initl(initl_parameters);
 
-    satrec.no       = initl_result.no
-    var method      = initl_result.method
-    var ainv        = initl_result.ainv
-    var ao          = initl_result.ao
-    satrec.con41    = initl_result.con41
-    var con42       = initl_result.con42
-    var cosio       = initl_result.cosio
-    var cosio2      = initl_result.cosio2
-    var eccsq       = initl_result.eccsq
-    var omeosq      = initl_result.omeosq
-    var posq        = initl_result.posq
-    var rp          = initl_result.rp
-    var rteosq      = initl_result.rteosq
-    var sinio       = initl_result.sinio
-    satrec.gsto     = initl_result.gsto
+    satrec.no       = initl_result.no;
+    var method      = initl_result.method;
+    var ainv        = initl_result.ainv;
+    var ao          = initl_result.ao;
+    satrec.con41    = initl_result.con41;
+    var con42       = initl_result.con42;
+    var cosio       = initl_result.cosio;
+    var cosio2      = initl_result.cosio2;
+    var eccsq       = initl_result.eccsq;
+    var omeosq      = initl_result.omeosq;
+    var posq        = initl_result.posq;
+    var rp          = initl_result.rp;
+    var rteosq      = initl_result.rteosq;
+    var sinio       = initl_result.sinio;
+    satrec.gsto     = initl_result.gsto;
 
     satrec.error = 0;
 
@@ -3398,11 +3400,11 @@ function propagate(satrec, year, month, day, hour, minute, second){
 
 satellite.twoline2satrec = function (longstr1, longstr2) {
     return twoline2rv (longstr1, longstr2);
-}
+};
 
 satellite.propagate = function (satrec, year, month, day, hour, minute, second) {
     return propagate (satrec, year, month, day, hour, minute, second);
-}
+};
 
 /*
  * satellite-js v1.1
@@ -3798,15 +3800,15 @@ function sgp4(satrec, tsince){
 
         //  --------- position and velocity (in km and km/sec) ----------
         r = { x : 0.0, y : 0.0, z : 0.0 };
-        r["x"] = (mrt * ux)* radiusearthkm;
-        r["y"] = (mrt * uy)* radiusearthkm;
+        r.x = (mrt * ux)* radiusearthkm;
+        r.y = (mrt * uy)* radiusearthkm;
         //FLIP Z???
-        r["z"] = (mrt * uz)* radiusearthkm;
+        r.z = (mrt * uz)* radiusearthkm;
         v = { x : 0.0, y : 0.0, z : 0.0 };
-        v["x"] = (mvt * ux + rvdot * vx) * vkmpersec;
-        v["y"] = (mvt * uy + rvdot * vy) * vkmpersec;
+        v.x = (mvt * ux + rvdot * vx) * vkmpersec;
+        v.y = (mvt * uy + rvdot * vy) * vkmpersec;
         //FLIP Z???
-        v["z"] = (mvt * uz + rvdot * vz) * vkmpersec;
+        v.z = (mvt * uz + rvdot * vz) * vkmpersec;
     }
     //  sgp4fix for decaying satellites
     if (mrt < 1.0) {
@@ -3819,7 +3821,7 @@ function sgp4(satrec, tsince){
 
 satellite.sgp4 = function (satrec, tsince) {
     return sgp4 (satrec, tsince);
-}
+};
 var scl = 1;
     
 xpl.setScale = function(s){
@@ -3884,12 +3886,12 @@ xpl.jday = function (year, mon, day, hr, minute, sec){
 };
 
 function jday(year, mon, day, hr, minute, sec){
-	typeof year == 'undefined' ? year = 0 : {};
-	typeof mon == 'undefined' ? mon = 0 : {};
-	typeof day == 'undefined' ? day = 0 : {};
-	typeof hr == 'undefined' ? hr = 0 : {};
-	typeof minute == 'undefined' ? minute = 0 : {};
-	typeof sec == 'undefined' ? sec = 0 : {};
+	if(typeof year === 'undefined'){year = 0;}
+	if(typeof mon === 'undefined'){mon = 0;}
+	if(typeof day === 'undefined'){day = 0;}
+	if(typeof hr === 'undefined'){hr = 0;}
+	if(typeof minute === 'undefined'){minute = 0;}
+	if(typeof sec === 'undefined'){sec = 0;}
 
 	return computeTheForm(year, mon, day, hr, minute, sec);
 }
@@ -3999,30 +4001,30 @@ xpl.updateTime = function (_deltaSeconds){
 	            updatedDate.getUTCSeconds()+deltaSeconds);
 };
 xpl.tle = function(line1, line2, name) {
-	typeof name == 'undefined' ? this.name='' : this.name=name
+	if(typeof name == 'undefined'){this.name='';}else{this.name=name;}
     this.line1 = line1;
     this.line2 = line2;
 
-    this.latlongalt;
-    this.position_eci;
-    this.velocity_eci;
-    this.position_ecf;
-    this.position_helio;
+    // this.latlongalt;
+    // this.position_eci;
+    // this.velocity_eci;
+    // this.position_ecf;
+    // this.position_helio;
     this.deltaSeconds = 0;
 
     this.update = function(t) {
-    	typeof t == "undefined" ? t = 0 : {}
+    	if(typeof t === "undefined"){t = 0;}
         // Initialize a satellite record
         var satrec = xpl.satellite.twoline2satrec (this.line1, this.line2);
         
-		var curgstime = xpl.satellite.gstime_from_jday(xpl.now+t)
+		var curgstime = xpl.satellite.gstime_from_jday(xpl.now+t);
         //MAKE DELTA DAYS ACCESSIBLE OUTSIDE THIS FUNCTION, RIGHT NOW, UPDATE ONLY UPDATES IN REAL TIME B/C now = new DATE
         //NEED TO MAKE NEW DATE() at CONSTRUCTION AND ADD T IN THIS FUNCTION
         //PROPAGATE NEEDS TO USE JDAY NOT CAL DATE
 
         // Propagate satellite using current time
         var now = new Date();
-        now.setSeconds(now.getSeconds()+(t*86400))
+        now.setSeconds(now.getSeconds()+(t*86400));
         //console.log(now)
         //console.log(t)
         // NOTE: while Javascript Date returns months in range 0-11, all satellite.js methods require months in range 1-12.
@@ -4035,19 +4037,19 @@ xpl.tle = function(line1, line2, name) {
                                                         now.getUTCSeconds());
         // The position_velocity result is a key-value pair of ECI coordinates.
         // These are the base results from which all other coordinates are derived.
-        var _position_eci = position_and_velocity["position"];
-        var _velocity_eci = position_and_velocity["velocity"];
+        var _position_eci = position_and_velocity.position;
+        var _velocity_eci = position_and_velocity.velocity;
         // The coordinates are all stored in key-value pairs.
         // ECI and ECF are accessed by "x", "y", "z".
 		//convert current satellite eci to lat/long in degrees and radians 
-        var _latlongalt = xpl.satellite.eci_to_geodetic(_position_eci, curgstime)
+        var _latlongalt = xpl.satellite.eci_to_geodetic(_position_eci, curgstime);
 
         
         _latlongalt.longitude = _latlongalt.longitude;
         _latlongalt.latitude = _latlongalt.latitude;
         _latlongalt.height = _latlongalt.height;
-        _latlongalt.longitudeDeg = _latlongalt.longitude*RAD2DEG
-        _latlongalt.latitudeDeg = _latlongalt.latitude*RAD2DEG
+        _latlongalt.longitudeDeg = _latlongalt.longitude*RAD2DEG;
+        _latlongalt.latitudeDeg = _latlongalt.latitude*RAD2DEG;
 
         //make position velocity and lat/long available to the outside
         this.latlongalt = _latlongalt;
@@ -4058,12 +4060,12 @@ xpl.tle = function(line1, line2, name) {
 
     this.getLookAnglesFrom = function(_longitude,_latitude, elevation){
     	var my_geodetic = new xpl.createGeodetic(_longitude,_latitude, elevation);
-    	var my_ecf = xpl.satellite.geodetic_to_ecf(my_geodetic)	
+    	var my_ecf = xpl.satellite.geodetic_to_ecf(my_geodetic);
     	//FIRST ARGUMENT TO xpl.satellite.ecf_to_look_angles IS GEODETIC, NOT ECF COORDS
     	//RETURNS RADIANS
-    	var lookAngles = xpl.satellite.ecf_to_look_angles(my_geodetic,this.position_ecf)
-    	lookAngles.azimuth*=RAD2DEG
-    	lookAngles.elevation*=RAD2DEG
-    	return lookAngles
-    }
-}
+    	var lookAngles = xpl.satellite.ecf_to_look_angles(my_geodetic,this.position_ecf);
+    	lookAngles.azimuth*=RAD2DEG;
+    	lookAngles.elevation*=RAD2DEG;
+    	return lookAngles;
+    };
+};

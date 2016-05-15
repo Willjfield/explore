@@ -218,15 +218,17 @@ function planet_xyz(p,jday) {
 	var zh = r * ( sind(v+w)*sind(i) );
 	var lonecl = atan2d(yh, xh);
 	var latecl = atan2d(zh, Math.sqrt(xh*xh + yh*yh + zh*zh));
+	var Ms;
+	var Mj;
 	if (p.num==JUPITER) {		// Jupiter pertuberations by Saturn
-		var Ms = rev(planets[SATURN].M[0] + planets[SATURN].M[1]*d);
+		Ms = rev(planets[SATURN].M[0] + planets[SATURN].M[1]*d);
 		lonecl += (-0.332)*sind(2*M-5*Ms-67.6) - 0.056*sind(2*M-2*Ms+21) + 0.042*sind(3*M-5*Ms+21) -
 				0.036*sind(M-2*Ms) + 0.022*cosd(M-Ms) + 0.023*sind(2*M-3*Ms+52) - 0.016*sind(M-5*Ms-69);
 		xh=r*cosd(lonecl)*cosd(latecl);		// recalc xh, yh
 		yh=r*sind(lonecl)*cosd(latecl);
 	}
 	if (p.num==SATURN) {		// Saturn pertuberations
-		var Mj = rev(planets[JUPITER].M[0] + planets[JUPITER].M[1]*d);
+		Mj = rev(planets[JUPITER].M[0] + planets[JUPITER].M[1]*d);
 		lonecl += 0.812*sind(2*Mj-5*M-67.6) - 0.229*cosd(2*Mj-4*M-2) + 0.119*sind(Mj-2*M-3) +
 				0.046*sind(2*Mj-6*M-69) + 0.014*sind(Mj-3*M+32);
 		latecl += -0.020*cosd(2*Mj-4*M-2) + 0.018*sind(2*Mj-6*M-49);
@@ -235,8 +237,8 @@ function planet_xyz(p,jday) {
     	zh = r*sind(latecl);
 	}
 	if (p.num==URANUS) {		// Uranus pertuberations
-		var Mj = rev(planets[JUPITER].M[0] + planets[JUPITER].M[1]*d);
-		var Ms = rev(planets[SATURN].M[0] + planets[SATURN].M[1]*d);
+		Mj = rev(planets[JUPITER].M[0] + planets[JUPITER].M[1]*d);
+		Ms = rev(planets[SATURN].M[0] + planets[SATURN].M[1]*d);
 		lonecl += 0.040*sind(Ms-2*M+6) + 0.035*sind(Ms-3*M+33) - 0.015*sind(Mj-M+20);
 		xh=r*cosd(lonecl)*cosd(latecl);		// recalc xh, yh
 		yh=r*sind(lonecl)*cosd(latecl);
@@ -502,8 +504,8 @@ function PlanetAlt(p,jday,obs) {
 
 xpl.curEarthOblique = function(jday){
         var _jd;
-        typeof jday == undefined ? _jd = xpl.now : _jd = jday
-        var t = ((_jd-2451545)/365.25/10000)
+        if(typeof jday === 'undefined'){_jd = xpl.now;}else{_jd = jday;} 
+        var t = ((_jd-2451545)/365.25/10000);
         var obl = 23.43929-
         (1.300258*t)-
         (0.0004305556*Math.pow(t,2))+
@@ -514,7 +516,7 @@ xpl.curEarthOblique = function(jday){
         (0.001977778*Math.pow(t,7))+
         (0.007741667*Math.pow(t,8))+
         (0.001608333*Math.pow(t,9))+
-        (0.0006805556*Math.pow(t,10))
+        (0.0006805556*Math.pow(t,10));
 
-        return obl
-    }
+        return obl;
+    };

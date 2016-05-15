@@ -1348,7 +1348,7 @@ function dspace (dspace_parameters){
         nodem : nodem,
         dndt : dndt,
         nm : nm,
-    }
+    };
     return dspace_results;
 }
 /*
@@ -1473,17 +1473,17 @@ function days2mdhms(year, days){
 
 
 satellite.jday = function (year, mon, day, hr, minute, sec){
-	return jday(year, mon, day, hr, minute, sec)
-	}
+	return jday(year, mon, day, hr, minute, sec);
+	};
 
 satellite.gstime_from_jday = function (julian_day) {
     return gstime (julian_day);
-}
+};
 
 satellite.gstime_from_date = function (year, mon, day, hr, minute, sec) {
     var julian_day = jday(year, mon, day, hr, minute, sec);
     return gstime (julian_day);
-}
+};
 /*
  * satellite-js v1.1
  * (c) 2013 Shashwat Kandadai and UCSC
@@ -1831,21 +1831,21 @@ function sgp4init(satrec, sgp4init_parameters){
 
     var initl_result= initl(initl_parameters);
 
-    satrec.no       = initl_result.no
-    var method      = initl_result.method
-    var ainv        = initl_result.ainv
-    var ao          = initl_result.ao
-    satrec.con41    = initl_result.con41
-    var con42       = initl_result.con42
-    var cosio       = initl_result.cosio
-    var cosio2      = initl_result.cosio2
-    var eccsq       = initl_result.eccsq
-    var omeosq      = initl_result.omeosq
-    var posq        = initl_result.posq
-    var rp          = initl_result.rp
-    var rteosq      = initl_result.rteosq
-    var sinio       = initl_result.sinio
-    satrec.gsto     = initl_result.gsto
+    satrec.no       = initl_result.no;
+    var method      = initl_result.method;
+    var ainv        = initl_result.ainv;
+    var ao          = initl_result.ao;
+    satrec.con41    = initl_result.con41;
+    var con42       = initl_result.con42;
+    var cosio       = initl_result.cosio;
+    var cosio2      = initl_result.cosio2;
+    var eccsq       = initl_result.eccsq;
+    var omeosq      = initl_result.omeosq;
+    var posq        = initl_result.posq;
+    var rp          = initl_result.rp;
+    var rteosq      = initl_result.rteosq;
+    var sinio       = initl_result.sinio;
+    satrec.gsto     = initl_result.gsto;
 
     satrec.error = 0;
 
@@ -2391,11 +2391,11 @@ function propagate(satrec, year, month, day, hour, minute, second){
 
 satellite.twoline2satrec = function (longstr1, longstr2) {
     return twoline2rv (longstr1, longstr2);
-}
+};
 
 satellite.propagate = function (satrec, year, month, day, hour, minute, second) {
     return propagate (satrec, year, month, day, hour, minute, second);
-}
+};
 
 /*
  * satellite-js v1.1
@@ -2791,15 +2791,15 @@ function sgp4(satrec, tsince){
 
         //  --------- position and velocity (in km and km/sec) ----------
         r = { x : 0.0, y : 0.0, z : 0.0 };
-        r["x"] = (mrt * ux)* radiusearthkm;
-        r["y"] = (mrt * uy)* radiusearthkm;
+        r.x = (mrt * ux)* radiusearthkm;
+        r.y = (mrt * uy)* radiusearthkm;
         //FLIP Z???
-        r["z"] = (mrt * uz)* radiusearthkm;
+        r.z = (mrt * uz)* radiusearthkm;
         v = { x : 0.0, y : 0.0, z : 0.0 };
-        v["x"] = (mvt * ux + rvdot * vx) * vkmpersec;
-        v["y"] = (mvt * uy + rvdot * vy) * vkmpersec;
+        v.x = (mvt * ux + rvdot * vx) * vkmpersec;
+        v.y = (mvt * uy + rvdot * vy) * vkmpersec;
         //FLIP Z???
-        v["z"] = (mvt * uz + rvdot * vz) * vkmpersec;
+        v.z = (mvt * uz + rvdot * vz) * vkmpersec;
     }
     //  sgp4fix for decaying satellites
     if (mrt < 1.0) {
@@ -2812,4 +2812,4 @@ function sgp4(satrec, tsince){
 
 satellite.sgp4 = function (satrec, tsince) {
     return sgp4 (satrec, tsince);
-}
+};
