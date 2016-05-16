@@ -3816,6 +3816,8 @@ function sgp4(satrec, tsince){
 satellite.sgp4 = function (satrec, tsince) {
     return sgp4 (satrec, tsince);
 };
+
+xpl.satellite = satellite;
 var scl = 1;
     
 xpl.setScale = function(s){
