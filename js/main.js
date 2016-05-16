@@ -6,3 +6,4 @@
 
 "use strict";
 var xpl = {};
+var satellite = { version : "1.2" };

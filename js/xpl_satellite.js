@@ -1,15 +1,6 @@
 	////////////////  EARTH satellite-js   //////////////////
 	////	https://github.com/shashwatak/satellite-js	////
-/*
- * satellite-js v1.1
- * (c) 2013 Shashwat Kandadai and UCSC
- * https://github.com/shashwatak/satellite-js
- * License: MIT
- */
 
-xpl.satellite = {};
-
-    var satellite = { version : "1.2" };
 /*
     satellite-head.js and satellite-tail.js sandwich all the other
     functions in the library.
