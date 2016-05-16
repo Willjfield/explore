@@ -83,6 +83,25 @@ xpl.venus = new planet("Venus",1,
    {r:255,g:153,b:51}
    );
 
+xpl.curEarthOblique = function(jday){
+        var _jd;
+        if(typeof jday === 'undefined'){_jd = xpl.now;}else{_jd = jday;} 
+        var t = ((_jd-2451545)/365.25/10000);
+        var obl = 23.43929-
+        (1.300258*t)-
+        (0.0004305556*Math.pow(t,2))+
+        (0.5553472*Math.pow(t,3))- 
+        (0.01427222*Math.pow(t,4))-
+        (0.06935278*Math.pow(t,5))-
+        (0.01084722*Math.pow(t,6))+
+        (0.001977778*Math.pow(t,7))+
+        (0.007741667*Math.pow(t,8))+
+        (0.001608333*Math.pow(t,9))+
+        (0.0006805556*Math.pow(t,10));
+
+        return obl;
+    };
+
 var eObl = xpl.curEarthOblique(xpl.now);
 
 xpl.earth = new planet("Earth",2,
@@ -502,21 +521,4 @@ function PlanetAlt(p,jday,obs) {
 	return new Array (altaz[0], altaz[1], altaz[2], ra, dec, lon, lat, k, r, dist, mag);
 }
 
-xpl.curEarthOblique = function(jday){
-        var _jd;
-        if(typeof jday === 'undefined'){_jd = xpl.now;}else{_jd = jday;} 
-        var t = ((_jd-2451545)/365.25/10000);
-        var obl = 23.43929-
-        (1.300258*t)-
-        (0.0004305556*Math.pow(t,2))+
-        (0.5553472*Math.pow(t,3))- 
-        (0.01427222*Math.pow(t,4))-
-        (0.06935278*Math.pow(t,5))-
-        (0.01084722*Math.pow(t,6))+
-        (0.001977778*Math.pow(t,7))+
-        (0.007741667*Math.pow(t,8))+
-        (0.001608333*Math.pow(t,9))+
-        (0.0006805556*Math.pow(t,10));
 
-        return obl;
-    };
